@@ -10,6 +10,13 @@ class RepositoriesController < ApplicationController
       req.params['client_secret'] = '099a67e8ea2fb757517a6094cca8d94218d94f6d'
       req.params['query'] = 'admiralty'
     end
+
+    body = JSON.parse(@resp.body)
+    if @resp.success?
+      @venues = body["response"]["venues"]
+    else
+      @error = body["meta"]["errorDetail"]
+    end
     render 'search'
   end
 end
